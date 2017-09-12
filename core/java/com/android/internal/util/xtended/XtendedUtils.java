@@ -58,6 +58,9 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.IWindowManager;
 import android.provider.MediaStore;
+import android.view.InputDevice;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -226,6 +229,15 @@ public class XtendedUtils {
             } catch (RemoteException e) {
                 // do nothing.
             }
+        }
+    }
+
+    public static void takeScreenshot(boolean full) {
+        IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+        try {
+            wm.sendCustomAction(new Intent(full? INTENT_SCREENSHOT : INTENT_REGION_SCREENSHOT));
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
