@@ -6168,6 +6168,16 @@ public final class Settings {
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
 
         /**
+         * @hide
+         */
+        public static final String BURN_IN_PROTECTION = "burn_in_protection";
+
+        /**
+         * @hide
+         */
+        public static final String BURN_IN_PROTECTION_INTERVAL = "burn_in_protection_interval";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
