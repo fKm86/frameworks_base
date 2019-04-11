@@ -50,17 +50,6 @@
         android:orientation="horizontal"
         >
 
-        <com.android.systemui.xtended.carrierlabel.CarrierLabel
-            android:id="@+id/statusbar_carrier_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="start|center_vertical"
-            android:textAppearance="@style/TextAppearance.StatusBar.Clock"
-            android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
-            android:visibility="gone"
-            android:singleLine="true"/>
-
         <FrameLayout
             android:layout_height="match_parent"
             android:layout_width="0dp"
@@ -77,6 +66,17 @@
                 android:layout_width="match_parent"
                 android:clipChildren="false"
             >
+                <com.android.systemui.xtended.carrierlabel.CarrierLabel
+                    android:id="@+id/statusbar_carrier_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start|center_vertical"
+                    android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+                    android:padding="2dp"
+                    android:visibility="gone"
+                    android:singleLine="true"/>
+
                 <ViewStub
                     android:id="@+id/operator_name"
                     android:layout_width="wrap_content"
