@@ -150,6 +150,7 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
     private static final int MSG_TOGGLE_CAMERA_FLASH               = 61 << MSG_SHIFT;
     private static final int MSG_KILL_FOREGROUND_APP               = 62 << MSG_SHIFT;
     private static final int MSG_TOGGLE_SETTINGS_PANEL             = 63 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_CAMERA_FLASH_STATE         = 64 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -407,6 +408,8 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
 
         default void toggleCameraFlash() { }
         default void killForegroundApp() { }
+
+        default void toggleCameraFlashState(boolean enable) { }
     }
 
     public CommandQueue(Context context) {
@@ -1135,6 +1138,14 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         }
     }
 
+    @Override
+    public void toggleCameraFlashState(boolean enable) {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH_STATE);
+            mHandler.obtainMessage(MSG_TOGGLE_CAMERA_FLASH_STATE,enable ? 1 : 0, 0, null).sendToTarget();
+        }
+    }
+
     private final class H extends Handler {
         private H(Looper l) {
             super(l);
@@ -1518,6 +1529,11 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
                 case MSG_KILL_FOREGROUND_APP:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).killForegroundApp();
+                    }
+                    break;
+                case MSG_TOGGLE_CAMERA_FLASH_STATE:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).toggleCameraFlashState(msg.arg1 != 0);
                     }
                     break;
             }
