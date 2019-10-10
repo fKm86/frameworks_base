@@ -296,4 +296,5 @@ public class DozeParameters implements
          */
         void onAlwaysOnChange();
     }
+
 }
