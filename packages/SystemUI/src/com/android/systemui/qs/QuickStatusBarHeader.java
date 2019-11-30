@@ -144,8 +144,6 @@ public class QuickStatusBarHeader extends FrameLayout {
 
         updateResources();
 
-        // Don't need to worry about tuner settings for this icon
-        mBatteryRemainingIcon.setIgnoreTunerUpdates(true);
         // QS will always show the estimate, and BatteryMeterView handles the case where
         // it's unavailable or charging
         mBatteryRemainingIcon.setPercentShowMode(getBatteryPercentMode());
