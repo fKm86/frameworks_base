@@ -23,6 +23,7 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Icon;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -88,6 +89,8 @@ public class NavigationBarInflaterView extends FrameLayout
             Settings.Secure.NAVBAR_LAYOUT_VIEWS;
     private static final String NAVBAR_INVERSE_LAYOUT =
             Settings.Secure.NAVBAR_INVERSE_LAYOUT;
+    public static final String NAVIGATION_BAR_ARROW_KEYS = "system:"
+            + Settings.System.NAVIGATION_BAR_ARROW_KEYS;
 
     protected LayoutInflater mLayoutInflater;
     protected LayoutInflater mLandscapeInflater;
@@ -166,6 +169,7 @@ public class NavigationBarInflaterView extends FrameLayout
         super.onAttachedToWindow();
         Dependency.get(TunerService.class).addTunable(this, NAVBAR_LAYOUT_VIEWS);
         Dependency.get(TunerService.class).addTunable(this, NAVBAR_INVERSE_LAYOUT);
+        Dependency.get(TunerService.class).addTunable(this, NAVIGATION_BAR_ARROW_KEYS);
     }
 
     @Override
@@ -188,6 +192,9 @@ public class NavigationBarInflaterView extends FrameLayout
                 break;
             default:
                 break;
+        }
+        if (NAVIGATION_BAR_ARROW_KEYS.equals(key)) {
+            onLikelyDefaultLayoutChange();
         }
     }
 
@@ -328,6 +335,11 @@ public class NavigationBarInflaterView extends FrameLayout
         } else {
             setLayoutDirection(View.LAYOUT_DIRECTION_INHERIT);
         }
+    }
+
+    private boolean showDpadArrowKeys() {
+        return Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.NAVIGATION_BAR_ARROW_KEYS, 0, UserHandle.USER_CURRENT) != 0;
     }
 
     private void addGravitySpacer(LinearLayout layout) {
@@ -530,7 +542,9 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private void clearAllChildren(ViewGroup group) {
         for (int i = 0; i < group.getChildCount(); i++) {
-            ((ViewGroup) group.getChildAt(i)).removeAllViews();
+            if (group.getChildAt(i).getId() != R.id.dpad_group) {
+                ((ViewGroup) group.getChildAt(i)).removeAllViews();
+            }
         }
     }
 
