@@ -289,4 +289,6 @@ oneway interface IStatusBar
      * Xtended extensions
      */
     void toggleCameraFlash();
+
+    void killForegroundApp();
 }

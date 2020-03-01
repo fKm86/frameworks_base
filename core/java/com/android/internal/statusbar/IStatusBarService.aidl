@@ -167,4 +167,6 @@ interface IStatusBarService
      * Xtended extensions
      */
     void toggleCameraFlash();
+
+    void killForegroundApp();
 }
