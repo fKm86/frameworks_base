@@ -53,6 +53,8 @@ public interface NavigationEdgeBackPlugin extends Plugin {
 
     void resetOnDown();
 
+    void setLongSwipeEnabled(boolean enabled);
+
     /** Dumps info about the back gesture plugin. */
     void dump(PrintWriter pw);
 
