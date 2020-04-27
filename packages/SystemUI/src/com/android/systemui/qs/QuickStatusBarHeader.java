@@ -337,7 +337,7 @@ public class QuickStatusBarHeader extends FrameLayout {
     }
 
     public void setBatteryPercentMode() {
-        mBatteryRemainingIcon.setPercentShowMode(getBatteryPercentMode(), true);
+        mBatteryRemainingIcon.setPercentShowMode(getBatteryPercentMode());
     }
 
     /** */
