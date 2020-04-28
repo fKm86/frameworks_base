@@ -17,6 +17,7 @@
 package com.android.internal.util.xtended;
 
 import android.app.ActivityManager;
+import android.app.ActivityOptions;
 import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -51,6 +53,7 @@ import android.os.Vibrator;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.IWindowManager;
@@ -64,6 +67,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.statusbar.IStatusBarService;
@@ -92,6 +96,8 @@ public class XtendedUtils {
     public static final String ANIM = "anim";
     public static final String INTENT_SCREENSHOT = "action_take_screenshot";
     public static final String INTENT_REGION_SCREENSHOT = "action_take_region_screenshot";
+
+    private static final String TAG = XtendedUtils.class.getSimpleName();
 
     private static IStatusBarService mStatusBarService = null;
 
@@ -246,4 +252,52 @@ public class XtendedUtils {
                 break;
         }
     }
+
+    // Switch to last app
+    public static void switchToLastApp(Context context) {
+        final ActivityManager am =
+                (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.RunningTaskInfo lastTask = getLastTask(context, am);
+
+        if (lastTask != null) {
+            am.moveTaskToFront(lastTask.id, ActivityManager.MOVE_TASK_NO_USER_ACTION,
+                    getAnimation(context).toBundle());
+        }
+    }
+
+    private static ActivityOptions getAnimation(Context context) {
+        return ActivityOptions.makeCustomAnimation(context,
+                com.android.internal.R.anim.custom_app_in,
+                com.android.internal.R.anim.custom_app_out);
+    }
+
+    private static ActivityManager.RunningTaskInfo getLastTask(Context context,
+            final ActivityManager am) {
+        final List<String> packageNames = getCurrentLauncherPackages(context);
+        final List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(5);
+        for (int i = 1; i < tasks.size(); i++) {
+            String packageName = tasks.get(i).topActivity.getPackageName();
+            if (!packageName.equals(context.getPackageName())
+                    && !packageName.equals(PACKAGE_SYSTEMUI)
+                    && !packageNames.contains(packageName)) {
+                return tasks.get(i);
+            }
+        }
+        return null;
+    }
+
+    private static List<String> getCurrentLauncherPackages(Context context) {
+        final PackageManager pm = context.getPackageManager();
+        final List<ResolveInfo> homeActivities = new ArrayList<>();
+        pm.getHomeActivities(homeActivities);
+        final List<String> packageNames = new ArrayList<>();
+        for (ResolveInfo info : homeActivities) {
+            final String name = info.activityInfo.packageName;
+            if (!name.equals("com.android.settings")) {
+                packageNames.add(name);
+            }
+        }
+        return packageNames;
+    }
+
 }
