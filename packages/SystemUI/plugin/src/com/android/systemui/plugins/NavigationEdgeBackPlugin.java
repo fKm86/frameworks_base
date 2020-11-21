@@ -51,6 +51,8 @@ public interface NavigationEdgeBackPlugin extends Plugin {
     /** Updates the UI based on the motion events passed in device coordinates. */
     void onMotionEvent(MotionEvent motionEvent);
 
+    void resetOnDown();
+
     /** Dumps info about the back gesture plugin. */
     void dump(PrintWriter pw);
 
