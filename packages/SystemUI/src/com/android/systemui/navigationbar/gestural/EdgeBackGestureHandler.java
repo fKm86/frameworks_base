@@ -1021,6 +1021,9 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
             case 14: // Switch recent app
                 XtendedUtils.switchToLastApp(mContext);
                 break;
+            case 15: // Partial screenshot
+                XtendedUtils.takeScreenshot(false);
+                break;
         }
     }
 
