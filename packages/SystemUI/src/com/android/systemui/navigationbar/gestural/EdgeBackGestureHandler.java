@@ -507,7 +507,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
 
     private void vibrateTick() {
             AsyncTask.execute(() ->
-                    mVibrator.vibrate(VibrationEffect.createOneShot(HAPTIC_DURATION, VibrationEffect.DEFAULT_AMPLITUDE)));
+                    mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK)));
     }
 
     public void onSettingsChanged() {
