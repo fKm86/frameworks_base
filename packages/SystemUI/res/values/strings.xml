@@ -2992,11 +2992,4 @@
     <string name="global_actions_change_description" translatable="false"><xliff:g>%1$s</xliff:g></string>
     <!-- URL for more information about changes in global actions -->
     <string name="global_actions_change_url" translatable="false"></string>
-    
-    <!-- Advanced Reboot -->
-    <string name="global_action_restart_advanced">Advanced</string>
-    <string name="global_action_restart_recovery">Recovery</string>
-    <string name="global_action_restart_bootloader">Bootloader</string>
-    <string name="global_action_restart_ui">SystemUI</string>    
-    
 </resources>
