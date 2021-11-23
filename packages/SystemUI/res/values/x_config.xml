@@ -25,10 +25,6 @@
     <integer name="config_maxVisibleNotificationIcons">5</integer>
     <integer name="config_maxVisibleNotificationIconsWhenLock">6</integer>
 
-    <!-- The battery current divider, some kernel report current value in mA other in µA.
-         Leave 1 if you have mA, put 1000 if you have µA-->
-    <integer name="config_battCurrentDivider" translatable="false">1</integer>
-
     <!-- Navbar -->
     <string name="config_navBarLayoutHandleArrows" translatable="false">back[1.7WC];home_handle;ime_switcher[1.7WC]</string>
 
