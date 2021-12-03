@@ -85,4 +85,7 @@
     <java-symbol type="string" name="config_lightFontFamily" />
     <java-symbol type="string" name="config_regularFontFamily" />
 
+  <!-- NightLight FOD -->
+  <java-symbol type="bool" name="disable_fod_night_light"/>
+
 </resources>
