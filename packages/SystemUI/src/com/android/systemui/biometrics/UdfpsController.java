@@ -333,13 +333,11 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
         @Override
         public void onAcquired(int sensorId, int acquiredInfo, int vendorCode) {
             mFgExecutor.execute(() -> {
-                final boolean isDozing = mStatusBarStateController.isDozing() || !mScreenOn;
-                if (acquiredInfo == 6 && vendorCode == mUdfpsVendorCode) {
-                    if ((mScreenOffFod && isDozing) /** Screen off and dozing */ ||
-                            (mKeyguardUpdateMonitor.isDreaming() && mScreenOn) /** AOD or pulse */) {
+                if (acquiredInfo == 6 && (mStatusBarStateController.isDozing() || !mScreenOn)) {
+                    if (vendorCode == mUdfpsVendorCode) { // Use overlay to determine pressed vendor code?
                         mPowerManager.wakeUp(SystemClock.uptimeMillis(),
                                 PowerManager.WAKE_REASON_GESTURE, TAG);
-                        onAodInterrupt(0, 0, 0, 0);
+                        onAodInterrupt(0, 0, 0, 0); // To-Do pass proper values
                     }
                 }
             });
