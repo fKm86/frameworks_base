@@ -238,10 +238,8 @@ public class WifiStatusTracker {
                 } else {
                     ssid = getValidSsid(mWifiInfo);
                 }
-                if (mSupportMergedUi) {
-                    isCarrierMerged = mWifiInfo.isCarrierMerged();
-                    subId = mWifiInfo.getSubscriptionId();
-                }
+                isCarrierMerged = mWifiInfo.isCarrierMerged();
+                subId = mWifiInfo.getSubscriptionId();
                 updateRssi(mWifiInfo.getRssi());
                 maybeRequestNetworkScore();
             }
@@ -279,10 +277,8 @@ public class WifiStatusTracker {
             } else {
                 ssid = getValidSsid(mWifiInfo);
             }
-            if (mSupportMergedUi) {
-                isCarrierMerged = mWifiInfo.isCarrierMerged();
-                subId = mWifiInfo.getSubscriptionId();
-            }
+            isCarrierMerged = mWifiInfo.isCarrierMerged();
+            subId = mWifiInfo.getSubscriptionId();
             updateRssi(mWifiInfo.getRssi());
             maybeRequestNetworkScore();
         } else {
